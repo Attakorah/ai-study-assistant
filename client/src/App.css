@@ -211,6 +211,28 @@ button:disabled {
     background: rgba(37, 99, 235, 0.08);
 }
 
+.result-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
+
+.result-actions button {
+    width: auto;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+}
+
+.copy-message {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--primary);
+    font-weight: 700;
+}
+
 @media (max-width: 600px) {
     .form-header {
         align-items: flex-start;

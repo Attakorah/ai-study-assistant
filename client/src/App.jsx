@@ -8,6 +8,7 @@ function App() {
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [copyMessage, setCopyMessage] = useState("");
 
     const wordCount = content
         .trim()
@@ -24,6 +25,40 @@ function App() {
         setContent("");
         setResult(null);
         setError("");
+        setCopyMessage("");
+    }
+
+    async function copyNotes() {
+      if (!result) {
+        return;
+      }
+
+      const notesText = `
+AI Study Notes
+
+Summary:
+${result.summary}
+
+Key Points:
+${result.keyPoints.map((point, index) => `${index + 1}. ${point}`).join("\n")}
+
+Quiz Questions:
+${result.quizQuestions.map((question, index) => `${index + 1}. ${question}`).join("\n")}
+
+Study Advice:
+${result.studyAdvice}
+    `.trim();
+
+      try {
+        await navigator.clipboard.writeText(notesText);
+        setCopyMessage("Notes copied to clipboard.");
+
+        setTimeout(() => {
+            setCopyMessage("");
+        }, 2500);
+      } catch {
+        setCopyMessage("Unable to copy notes.");
+      }
     }
 
     async function generateStudyNotes(event) {
@@ -38,6 +73,7 @@ function App() {
             setLoading(true);
             setError("");
             setResult(null);
+            setCopyMessage("");
 
             const response = await fetch("http://localhost:5000/api/study-notes", {
                 method: "POST",
@@ -120,6 +156,13 @@ function App() {
             {result && (
                 <section className="result-card">
                     <h2>Generated Study Notes</h2>
+                    <div className="result-actions">
+                      <button type="button" onClick={copyNotes}>
+                        Copy Notes
+                      </button>
+                    </div>
+
+                    {copyMessage && <p className="copy-message">{copyMessage}</p>}
 
                     <div className="result-section">
                         <h3>Summary</h3>
