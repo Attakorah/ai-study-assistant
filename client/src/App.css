@@ -169,6 +169,59 @@ button:disabled {
 .result-section li {
     margin-bottom: 8px;
 }
+
+.form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.form-header span {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.actions button {
+    flex: 1;
+}
+
+.secondary-btn {
+    background: #0f172a;
+}
+
+.secondary-btn:hover {
+    background: #1e293b;
+}
+
+.ghost-btn {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--border);
+}
+
+.ghost-btn:hover {
+    background: rgba(37, 99, 235, 0.08);
+}
+
+@media (max-width: 600px) {
+    .form-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}
+
 @media (max-width: 600px) {
     .app {
         padding: 32px 16px;

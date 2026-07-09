@@ -1,11 +1,30 @@
 import { useState } from "react";
 import "./App.css";
 
+const sampleContent = `Photosynthesis is the process by which green plants, algae, and some bacteria use sunlight to make food. During photosynthesis, plants take in carbon dioxide from the air and water from the soil. Using energy from sunlight, they convert these substances into glucose and oxygen. Glucose provides energy for the plant, while oxygen is released into the atmosphere. Photosynthesis mainly occurs in the chloroplasts of plant cells, which contain a green pigment called chlorophyll.`;
+
 function App() {
     const [content, setContent] = useState("");
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const wordCount = content
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean).length;
+
+    function useSampleText() {
+        setContent(sampleContent);
+        setError("");
+        setResult(null);
+    }
+
+    function clearContent() {
+        setContent("");
+        setResult(null);
+        setError("");
+    }
 
     async function generateStudyNotes(event) {
         event.preventDefault();
@@ -58,7 +77,10 @@ function App() {
 
             <section className="card">
                 <form onSubmit={generateStudyNotes}>
-                    <label htmlFor="study-content">Study Content</label>
+                    <div className="form-header">
+                        <label htmlFor="study-content">Study Content</label>
+                        <span>{wordCount} words</span>
+                    </div>
 
                     <textarea
                         id="study-content"
@@ -67,47 +89,67 @@ function App() {
                         onChange={(event) => setContent(event.target.value)}
                     />
 
-                    <button type="submit" disabled={loading}>
-                        {loading ? "Generating..." : "Generate Study Notes"}
-                    </button>
+                    <div className="actions">
+                        <button type="submit" disabled={loading}>
+                            {loading ? "Generating..." : "Generate Study Notes"}
+                        </button>
+
+                        <button
+                            type="button"
+                            className="secondary-btn"
+                            onClick={useSampleText}
+                            disabled={loading}
+                        >
+                            Use Sample Text
+                        </button>
+
+                        <button
+                            type="button"
+                            className="ghost-btn"
+                            onClick={clearContent}
+                            disabled={loading}
+                        >
+                            Clear
+                        </button>
+                    </div>
                 </form>
             </section>
 
             {error && <p className="error-message">{error}</p>}
 
             {result && (
-              <section className="result-card">
-                <h2>Generated Study Notes</h2>
+                <section className="result-card">
+                    <h2>Generated Study Notes</h2>
 
-                <div className="result-section">
-                  <h3>Summary</h3>
-                  <p>{result.summary}</p>
-                </div>
+                    <div className="result-section">
+                        <h3>Summary</h3>
+                        <p>{result.summary}</p>
+                    </div>
 
-                <div className="result-section">
-                  <h3>Key Points</h3>
-                  <ul>
-                    {result.keyPoints.map((point, index) => (
-                      <li key={index}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
+                    <div className="result-section">
+                        <h3>Key Points</h3>
+                        <ul>
+                            {result.keyPoints.map((point, index) => (
+                                <li key={index}>{point}</li>
+                            ))}
+                        </ul>
+                    </div>
 
-                <div className="result-section">
-                  <h3>Quiz Questions</h3>
-                  <ol>
-                    {result.quizQuestions.map((question, index) => (
-                      <li key={index}>{question}</li>
-                    ))}
-                  </ol>
-                </div>
+                    <div className="result-section">
+                        <h3>Quiz Questions</h3>
+                        <ol>
+                            {result.quizQuestions.map((question, index) => (
+                                <li key={index}>{question}</li>
+                            ))}
+                        </ol>
+                    </div>
 
-                <div className="result-section">
-                  <h3>Study Advice</h3>
-                  <p>{result.studyAdvice}</p>
-                </div>
-    </section>
-)}
+                    <div className="result-section">
+                        <h3>Study Advice</h3>
+                        <p>{result.studyAdvice}</p>
+                    </div>
+                </section>
+            )}
         </main>
     );
 }
