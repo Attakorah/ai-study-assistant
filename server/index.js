@@ -15,6 +15,10 @@ const openai = new OpenAI({
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send("AI Study Assistant API is running.");
+});
+
 app.post("/api/study-notes", async (req, res) => {
     const { content } = req.body;
 
