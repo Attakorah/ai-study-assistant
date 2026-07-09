@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const sampleContent = `Photosynthesis is the process by which green plants, algae, and some bacteria use sunlight to make food. During photosynthesis, plants take in carbon dioxide from the air and water from the soil. Using energy from sunlight, they convert these substances into glucose and oxygen. Glucose provides energy for the plant, while oxygen is released into the atmosphere. Photosynthesis mainly occurs in the chloroplasts of plant cells, which contain a green pigment called chlorophyll.`;
 
 function App() {
@@ -75,7 +76,7 @@ ${result.studyAdvice}
             setResult(null);
             setCopyMessage("");
 
-            const response = await fetch("http://localhost:5000/api/study-notes", {
+            const response = await fetch(`${API_URL}/api/study-notes`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
