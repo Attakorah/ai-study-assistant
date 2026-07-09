@@ -49,6 +49,12 @@ The project currently uses a mock AI response because API quota is not yet avail
 - REST API
 - Environment variables
 
+## Live Demo
+
+Frontend: https://ai-study-assistant-mu-steel.vercel.app/
+
+Backend API: https://ai-study-assistant-g7i2.onrender.com
+
 ## Project Structure
 
 ```text
